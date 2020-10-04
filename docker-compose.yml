@@ -1,0 +1,46 @@
+version: "3.8"
+
+services:
+
+  php:
+    build:
+      context: docker/images/php
+    ports:
+      - "81:80"
+    volumes:
+      - .:/var/www/html
+    networks:
+      - default
+    depends_on:
+      - mariadb
+
+  mariadb:
+    image: mariadb:10.5.5
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./docker/volumes/mariadb:/var/lib/mysql
+    networks:
+      - default
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: Gallery
+      MYSQL_USER: test_user
+      MYSQL_PASSWORD: test_pass
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    ports:
+      - "8080:80"
+    networks:
+      - default
+    depends_on:
+      - mariadb
+    environment:
+      PMA_HOST: mariadb
+      PMA_USER: root
+      PMA_PASSWORD: root
+
+networks:
+  default:
+    driver: bridge

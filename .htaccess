@@ -1,0 +1,7 @@
+RewriteEngine ON
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php?id=$1
+
+php_flag display_errors 1
