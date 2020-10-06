@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-class Role extends ActiveRecord
+class Privilege extends ActiveRecord
 {
-    public int $roleId;
-    public string $name;
+    public int $privilegeId;
+    public string $privilegeType;
     public bool $isRemoved;
 
     public function __construct(array $associative = array())
     {
         parent::__construct();
-        $this->roleId = (int)$associative["RoleId"] ?? 0;
-        $this->name = $associative["Name"] ?? "";
+        $this->privilegeId = (int)$associative["PrivilegeId"] ?? 0;
+        $this->privilegeType = $associative["PrivilegeType"] ?? "";
         $this->isRemoved = (bool)$associative["IsRemoved"] ?? false;
     }
 
@@ -25,14 +25,18 @@ class Role extends ActiveRecord
 
     public function getAll(): array
     {
-        $query = "SELECT * FROM Roles";
-
-        return $this->mapFrom($query, Role::class);
+        // TODO: Implement getAll() method.
     }
 
-    public function getById()
+    public function getById(): Privilege
     {
-        // TODO: Implement getById() method.
+        $query = "SELECT * FROM Privileges WHERE PrivilegeId = ?";
+
+        return new Privilege(
+            $this->query($query, "i", $this->privilegeId)
+                ->get_result()
+                ->fetch_assoc()
+        );
     }
 
     public function update(): void
@@ -43,10 +47,5 @@ class Role extends ActiveRecord
     public function delete(): void
     {
         // TODO: Implement delete() method.
-    }
-
-    public function __toString(): string
-    {
-        return $this->name;
     }
 }

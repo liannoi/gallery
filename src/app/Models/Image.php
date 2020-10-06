@@ -10,7 +10,7 @@ class Image extends ActiveRecord
     public int $userId;
     public string $path;
     public string $title;
-    public string $takenDate;
+    public ?string $takenDate;
     public string $uploadedDate;
     public bool $isRemoved;
 
@@ -21,14 +21,16 @@ class Image extends ActiveRecord
         $this->userId = (int)$associative["UserId"] ?? 0;
         $this->path = $associative["Path"] ?? "";
         $this->title = $associative["Title"] ?? "";
-        $this->takenDate = $associative["TakenDate"] ?? "";
-        $this->uploadedDate = $associative["UploadedDate"] ?? "";
+        $this->takenDate = $associative["TakenDate"] ?? null;
+        $this->uploadedDate = $associative["UploadedDate"] ?? date('Y-m-d H:i:s');
         $this->isRemoved = (bool)$associative["IsRemoved"] ?? false;
     }
 
     public function create(): void
     {
-        // TODO: Implement create() method.
+        $query = "INSERT INTO Images (UserId, Path, Title, TakenDate, UploadedDate) VALUES (?, ?, ?, ?, ?)";
+
+        $this->query($query, "issss", $this->userId, $this->path, $this->title, $this->takenDate, $this->uploadedDate);
     }
 
     public function getAll(): array

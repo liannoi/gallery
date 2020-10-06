@@ -4,25 +4,23 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-require_once "app/Models/Role.php";
+require_once "app/Models/Privilege.php";
 
-class UserRole extends ActiveRecord
+class UserPrivilege extends ActiveRecord
 {
     public int $userId;
-    public int $roleId;
+    public int $privilegeId;
 
-    public function __construct(array $associative = [])
+    public function __construct(array $associative = array())
     {
         parent::__construct();
         $this->userId = (int)$associative["UserId"] ?? 0;
-        $this->roleId = (int)$associative["RoleId"] ?? 0;
+        $this->privilegeId = (int)$associative["PrivilegeId"] ?? 0;
     }
 
     public function create(): void
     {
-        $query = "INSERT INTO UserRoles (UserId, RoleId) VALUES (?, ?)";
-
-        $this->query($query, "ii", $this->userId, $this->roleId);
+        // TODO: Implement create() method.
     }
 
     public function getAll(): array
@@ -47,10 +45,11 @@ class UserRole extends ActiveRecord
 
     public function getByUser(): array
     {
-        $query = "SELECT R.Name, R.RoleId FROM UserRoles AS UR";
-        $query .= " INNER JOIN Roles AS R ON UR.RoleId = R.RoleId";
-        $query .= " WHERE UR.UserId = {$this->userId};";
+        $query = "SELECT *";
+        $query .= " FROM UserPrivileges AS UR";
+        $query .= " INNER JOIN Users AS U ON UR.UserId = U.UserId";
+        $query .= " WHERE U.UserId = 1;";
 
-        return $this->mapFrom($query, Role::class);
+        return $this->mapFrom($query, Privilege::class);
     }
 }

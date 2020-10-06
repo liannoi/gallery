@@ -1,24 +1,11 @@
-<?php
-
-require_once "app/Models/UserRole.php";
-
-use App\Models\UserRole;
+<?
 
 if (!$this->isUserAuthenticated()) { ?>
     <script>
       window.location.replace('status-forbidden');
     </script>
     <?
-}
-
-$userRoles = (new UserRole(["UserId" => $this->user->userId]))->getByUser();
-
-if (count($userRoles) < 2) {
-    $parsedUserRoles = $userRoles[0]->name;
-} else {
-    $parsedUserRoles = implode(", ", $userRoles);
-}
-?>
+} ?>
 
 <div class="row mt-4">
     <div class="col-sm-12">
@@ -47,15 +34,32 @@ if (count($userRoles) < 2) {
             <tr>
                 <th scope="row"><?= $this->user->username ?></th>
                 <td><?= $this->user->email ?> (<?= $this->user->isEmailVerified ? "+" : "-" ?>)</td>
-                <td><?= $parsedUserRoles ?></td>
+                <td><?= implode(", ", $this->getUserRoles()) ?></td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
 
-<div class="row mt-4 mb-5">
+<?
+if (!$this->hasUserWritePrivileges()) {
+    return;
+} ?>
+
+<div class="row mt-4">
     <div class="col-sm-12">
         <h3>Images</h3>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col-sm-12">
+        <p>You are in the role of "Administrator" and have privileges for advanced operations with images.</p>
+    </div>
+</div>
+
+<div class="row mt-1">
+    <div class="col-sm-12">
+        <a href="image-upload" class="btn btn-primary">Upload image</a>
     </div>
 </div>

@@ -9,6 +9,7 @@ services:
       - "81:80"
     volumes:
       - ./src:/var/www/html
+      - ./docker/images/php/php.ini:/usr/local/etc/php/conf.d/custom.ini
     networks:
       - default
     depends_on:

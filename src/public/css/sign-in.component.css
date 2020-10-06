@@ -1,4 +1,5 @@
-.auth-form-body {
+.auth-form-body,
+.image-upload-form-body {
   border: 1px solid rgb(216, 222, 226);
   border-radius: 5px;
 }
