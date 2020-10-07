@@ -17,7 +17,7 @@ use Storage\App\UserStorage;
 
 class PageController
 {
-    public string $index;
+    public int $index = 0;
     private User $user;
     private array $names;
     private string $title;
@@ -67,9 +67,9 @@ class PageController
         if ($indexPosition > 0) {
             $parts = explode("@", $id);
             $id = $parts[0];
-            $this->index = $parts[1];
+            $this->index = (int)$parts[1];
         } else {
-            $this->index = "";
+            $this->index = 0;
         }
         return $id;
     }

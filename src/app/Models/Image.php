@@ -40,6 +40,14 @@ class Image extends ActiveRecord
         return $this->mapFrom($query, Image::class);
     }
 
+    public function getAllLimit(int $currentPage, int $itemsPerPage): array
+    {
+        $query = "SELECT * FROM Images LIMIT";
+        $query .= " $currentPage, $itemsPerPage";
+
+        return $this->mapFrom($query, Image::class);
+    }
+
     public function getById()
     {
         // TODO: Implement getById() method.
