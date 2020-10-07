@@ -17,6 +17,7 @@ use Storage\App\UserStorage;
 
 class PageController
 {
+    public string $index;
     private User $user;
     private array $names;
     private string $title;
@@ -26,32 +27,51 @@ class PageController
 
     public function __construct()
     {
+        $this->setupNames();
         $this->id = $this->getId();
         $this->user = $this->getUser();
-        $this->setupNames();
         $this->title = $this->names[$this->id];
         $this->content = "resources/layout/{$this->id}.component.php";
         $this->template = "resources/layout/app.component.php";
     }
 
+    private function setupNames(): void
+    {
+        $this->names = require "resources/values-en/names.php";
+    }
+
+    /** @noinspection PhpUnused */
+
     private function getId(): string
     {
         $id = $_GET["id"];
-        $this->setupNames();
-
         if (!isset($id)) {
             return "main";
-        } elseif (!array_key_exists($id, $this->names)) {
+        }
+
+        $id = $this->setupIndex($id);
+        if (!array_key_exists($id, $this->names)) {
             return "status-not-found";
         }
 
         return $id;
     }
 
-    /** @noinspection PhpUnused */
-    private function setupNames(): void
+    /**
+     * @param $id
+     * @return mixed|string
+     */
+    private function setupIndex($id)
     {
-        $this->names = require "resources/values-en/names.php";
+        $indexPosition = strpos($id, "@");
+        if ($indexPosition > 0) {
+            $parts = explode("@", $id);
+            $id = $parts[0];
+            $this->index = $parts[1];
+        } else {
+            $this->index = "";
+        }
+        return $id;
     }
 
     private function getUser(): User
@@ -82,6 +102,8 @@ class PageController
     {
         include $this->template;
     }
+
+    /** @noinspection PhpUnused */
 
     public function isUserAuthenticated()
     {
@@ -125,8 +147,6 @@ class PageController
 
         return true;
     }
-
-    /** @noinspection PhpUnused */
 
     public function getUserRoles(): array
     {

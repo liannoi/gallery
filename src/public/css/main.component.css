@@ -18,3 +18,7 @@
   letter-spacing: .004em;
   font-family: "Georgia", "Adobe Garamond Pro", "SF Mono", sans-serif;
 }
+
+.card-columns {
+  content-visibility: auto;
+}

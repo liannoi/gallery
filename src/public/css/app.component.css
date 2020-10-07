@@ -10,7 +10,8 @@ body {
 }
 
 body {
-  -webkit-font-smoothing: antialiased;
   font-family: "SF Pro Display", "Helvetica Neue", -apple-system, "Segoe UI", sans-serif;
   background: -webkit-gradient(linear, right top, left bottom, from(#fafafa), to(#efefef));
+  contain-intrinsic-size: 1000px;
+  -webkit-font-smoothing: antialiased;
 }

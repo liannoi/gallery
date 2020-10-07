@@ -23,11 +23,11 @@ if (!$this->isUserAuthenticated()) { ?>
                 <input type="text" class="form-control" id="photo_title" name="photo[title]" required>
             </div>
 
-            <div class="input-group">
+            <div class="input-group mb-3">
                 <div class="custom-file">
-                    <input type="file" class="custom-file-input" name="photo" id="photo" required>
+                    <input type="file" class="custom-file-input" id="photo" name="photo"/>
 
-                    <label class="custom-file-label" for="photo">Choose file</label>
+                    <label class="custom-file-label" for="photo">Choose file(-s)</label>
                 </div>
             </div>
 

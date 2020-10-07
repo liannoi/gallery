@@ -52,6 +52,8 @@ class Image extends ActiveRecord
 
     public function delete(): void
     {
-        // TODO: Implement delete() method.
+        $query = "DELETE FROM Images WHERE ImageId = ?";
+
+        $this->query($query, "i", $this->imageId);
     }
 }

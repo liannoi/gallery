@@ -19,12 +19,13 @@ $uuid = uniqid();
 $photo = "public/images/$uuid.$ext";
 
 $type = $_FILES["photo"]["type"];
-if ($type !== "image/png" && $type !== "image/gif" && $type !== "image/jpeg" && $type !== "image/jpg") {
+if ($type !== "image/png" && $type !== "image/jpeg" && $type !== "image/jpg") {
     echo "<h2 class='text-danger'>TYPE</h2>";
     return;
 }
 
 $size = $_FILES["photo"]["size"];
+/* 7 mb in bytes */
 if ($size >= 7340032) {
     echo "<h2 class='text-danger'>SIZE</h2>";
     return;
