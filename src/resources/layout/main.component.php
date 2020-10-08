@@ -40,7 +40,7 @@ if (count($images) == 0) { ?>
     <?
     foreach ($limitedImages as $image) {
         $user->userId = $image->userId ?>
-        <div class="card bg-dark text-white">
+        <div class="card bg-dark text-white" data-id="<?= $image->imageId ?>">
             <img src="<?= $image->path ?>" loading="lazy" class="card-img" alt="Image">
 
             <div class="card-footer">

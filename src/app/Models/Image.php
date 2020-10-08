@@ -50,7 +50,13 @@ class Image extends ActiveRecord
 
     public function getById()
     {
-        // TODO: Implement getById() method.
+        $query = "SELECT * FROM Images WHERE ImageId = ?";
+
+        return new Image(
+            $this->query($query, "i", $this->imageId)
+                ->get_result()
+                ->fetch_assoc()
+        );
     }
 
     public function update(): void

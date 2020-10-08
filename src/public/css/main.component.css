@@ -22,3 +22,7 @@
 .card-columns {
   content-visibility: auto;
 }
+
+.card:hover {
+  cursor: pointer;
+}

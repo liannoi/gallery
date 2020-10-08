@@ -5,6 +5,7 @@ return [
     "main" => "",
     "profile" => "Profile -",
     "image-delete-result" => "[DEBUG] (image / delete)",
+    "image-details" => "Details -",
     "image-upload" => "Uploading photo -",
     "image-upload-result" => "[DEBUG] (image / upload)",
 

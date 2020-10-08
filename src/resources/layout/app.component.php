@@ -41,5 +41,6 @@ include "resources/layout/nav-footer.component.php" ?>
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
 <script src="public/js/app.component.js"></script>
+<script src="public/js/main.component.js"></script>
 </body>
 </html>
