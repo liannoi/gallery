@@ -9,6 +9,7 @@ if (!$this->isUserAuthenticated()) { ?>
       window.location.replace('status-forbidden');
     </script>
     <?
+    return;
 }
 
 $title = $_POST["photo"]["title"];

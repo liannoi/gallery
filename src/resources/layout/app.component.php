@@ -10,6 +10,7 @@ ob_start(); ?>
     <title><?= $this->title ?> Gallery</title>
     <link rel="icon" href="public/favicon.ico">
     <link rel="stylesheet" href="public/css/app.component.css">
+    <link rel="stylesheet" href="public/css/image-details.component.css">
     <link rel="stylesheet" href="public/css/main.component.css">
     <link rel="stylesheet" href="public/css/nav-top-menu.component.css">
     <link rel="stylesheet" href="public/css/sign-in.component.css">

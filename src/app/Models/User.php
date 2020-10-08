@@ -9,7 +9,7 @@ require_once "app/Models/ActiveRecord.php";
 class User extends ActiveRecord
 {
     public int $userId;
-    public string $username;
+    public string $username = "";
     public string $email;
     public bool $emailConfirmed;
     public string $passwordHash;
@@ -77,5 +77,10 @@ class User extends ActiveRecord
         $query = "SELECT * FROM Users ORDER BY UserId DESC LIMIT 1";
 
         return $this->mapFrom($query, User::class)[0];
+    }
+
+    public function __toString(): string
+    {
+        return $this->username;
     }
 }

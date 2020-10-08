@@ -9,6 +9,7 @@ require_once "app/Models/UserRole.php";
 require_once "app/Models/UserPrivilege.php";
 require_once "storage/app/UserStorage.php";
 
+use App\Models\Comment;
 use App\Models\Privilege;
 use App\Models\User;
 use App\Models\UserPrivilege;
@@ -114,17 +115,7 @@ class PageController
 
     public function hasUserWritePrivileges(): bool
     {
-        $isUserAdministrator = false;
-
-        foreach ($this->getUserRoles() as $role) {
-            if ($role->roleId !== 2) {
-                continue;
-            }
-
-            $isUserAdministrator = true;
-        }
-
-        if (!$isUserAdministrator) {
+        if (!$this->isUserAdministrator()) {
             return false;
         }
 
@@ -148,8 +139,26 @@ class PageController
         return true;
     }
 
+    public function isUserAdministrator()
+    {
+        foreach ($this->getUserRoles() as $role) {
+            if ($role->roleId !== 2) {
+                continue;
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     public function getUserRoles(): array
     {
         return (new UserRole(["UserId" => $this->user->userId]))->getByUser();
+    }
+
+    public function isUserAuthorComment(Comment $comment)
+    {
+        return $this->user->userId === $comment->userId;
     }
 }

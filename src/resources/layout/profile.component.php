@@ -5,6 +5,7 @@ if (!$this->isUserAuthenticated()) { ?>
       window.location.replace('status-forbidden');
     </script>
     <?
+    return;
 } ?>
 
 <div class="row mt-4">

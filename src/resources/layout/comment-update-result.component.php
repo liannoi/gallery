@@ -1,8 +1,8 @@
 <?php
 
-require_once "app/Models/Image.php";
+require_once "app/Models/Comment.php";
 
-use App\Models\Image;
+use App\Models\Comment;
 
 if (!$this->isUserAuthenticated()) { ?>
     <script>
@@ -12,7 +12,7 @@ if (!$this->isUserAuthenticated()) { ?>
     return;
 }
 
-(new Image(["ImageId" => $this->index]))->delete();
+(new Comment(["CommentId" => $this->index, "CommentValue" => $_POST["user"]["message"]]))->update();
 
 ?>
 

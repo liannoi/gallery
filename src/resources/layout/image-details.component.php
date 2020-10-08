@@ -1,12 +1,17 @@
 <?php
 
 require_once "app/Models/Image.php";
+require_once "app/Models/Comment.php";
 
+use App\Models\Comment;
 use App\Models\Image;
 use App\Models\User;
 
-$image = (new Image(["ImageId" => $this->index]))->getById();
+$imageId = ["ImageId" => $this->index];
+$image = (new Image($imageId))->getById();
 $author = (new User(["UserId" => $image->userId]))->getById();
+$commentAuthor = new User();
+$comments = (new Comment($imageId))->getByImage();
 
 ?>
 
@@ -38,6 +43,63 @@ $author = (new User(["UserId" => $image->userId]))->getById();
 <div class="row mt-2">
     <div class="col-sm-12">
         <hr>
-        <h4>Comments</h4>
+        <h5><?= count($comments) ?> Comments</h5>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col-sm-12">
+        <?
+        if ($this->isUserAuthenticated()) { ?>
+            <form action="comment-create-result@<?= $this->index ?>" method="post" class="mb-4">
+                <div class="form-group">
+                    <label for="user_message" class="font-weight-bold">Add a public comment...</label>
+
+                    <textarea id="user_message" name="user[message]" class="form-textarea"></textarea>
+                </div>
+
+                <div class="form-row mt-4">
+                    <div class="col-sm-12">
+                        <button type="submit" class="btn btn-primary float-right font-weight-bold">Comment</button>
+                    </div>
+                </div>
+            </form>
+            <?
+        } ?>
+        <?
+        $count = count($comments);
+        for ($i = 0; $i < $count; $i++) { ?>
+            <div class="row mt-3">
+                <div class="col-sm-12">
+                    <span class="font-weight-bold">
+                        <?
+                        $commentAuthor->userId = $comments[$i]->userId;
+                        echo $commentAuthor->getById(); ?>
+                    </span>
+                    <?
+                    $isAuthenticated = $this->isUserAuthenticated();
+                    $isAuthorOrAdministrator = ($this->isUserAuthorComment($comments[$i]) ||
+                        $this->isUserAdministrator());
+
+                    $isAuthenticatedAndHavePermission = $isAuthenticated && $isAuthorOrAdministrator;
+                    if ($isAuthenticatedAndHavePermission) { ?>
+                        <div class="btn-group float-right mb-2">
+                            <a href="comment-update@<?= $comments[$i]->commentId ?>"
+                               class="btn btn-light font-weight-bold">Edit</a>
+                            <a href="comment-delete-result@<?= $comments[$i]->commentId ?>"
+                               class="btn btn-light font-weight-bold">Delete</a>
+                        </div>
+                        <?
+                    } ?>
+                </div>
+            </div>
+            <div class="row mt-1">
+                <div class="col-sm-12">
+                    <span><?= $comments[$i]->commentValue ?></span>
+                </div>
+            </div>
+
+            <?
+        } ?>
     </div>
 </div>

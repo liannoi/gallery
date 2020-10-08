@@ -11,10 +11,10 @@ class Image extends ActiveRecord
     public string $path;
     public string $title;
     public ?string $takenDate;
-    public string $uploadedDate;
+    public ?string $uploadedDate;
     public bool $isRemoved;
 
-    public function __construct(array $associative = array())
+    public function __construct(array $associative = [])
     {
         parent::__construct();
         $this->imageId = (int)$associative["ImageId"] ?? 0;
